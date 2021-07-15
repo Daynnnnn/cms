@@ -31,7 +31,7 @@ class MountingTest extends TestCase
 
         $this->assertNull(Entry::findByUri('/pages/blog/one'));
         $this->assertNull(Entry::findByUri('/pages/blog/two'));
-        $this->assertEquals($one, Entry::findByUri('/pages/diary/one'));
-        $this->assertEquals($two, Entry::findByUri('/pages/diary/two'));
+        $this->assertEquals($one->fresh(), Entry::findByUri('/pages/diary/one'));
+        $this->assertEquals($two->fresh(), Entry::findByUri('/pages/diary/two'));
     }
 }

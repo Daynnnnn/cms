@@ -39,6 +39,7 @@ class BuilderTest extends TestCase
         $columns = ['title'];
         $retrievedEntry = Entry::query()->find($searchedEntry->id(), $columns);
 
+        dd($searchedEntry->fresh());
         $this->assertSame($searchedEntry, $retrievedEntry);
         $this->assertSame($retrievedEntry->selectedQueryColumns(), $columns);
     }

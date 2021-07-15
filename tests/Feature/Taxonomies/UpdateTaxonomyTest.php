@@ -44,6 +44,8 @@ class UpdateTaxonomyTest extends TestCase
             ])
             ->assertOk();
 
+        $taxonomy = Taxonomy::find($taxonomy->handle());
+
         $this->assertCount(1, Taxonomy::all());
         $this->assertEquals('Updated title', $taxonomy->title());
     }
@@ -67,6 +69,11 @@ class UpdateTaxonomyTest extends TestCase
                 'collections' => ['one', 'three'],
             ])
             ->assertOk();
+
+        $collectionOne = Collection::find($collectionOne->handle());
+        $collectionTwo = Collection::find($collectionTwo->handle());
+        $collectionThree = Collection::find($collectionThree->handle());
+        $taxonomy = Taxonomy::find($taxonomy->handle());
 
         $this->assertEquals(['one', 'three'], $taxonomy->collections()->map->handle()->all());
         $this->assertTrue($collectionOne->taxonomies()->contains($taxonomy));
