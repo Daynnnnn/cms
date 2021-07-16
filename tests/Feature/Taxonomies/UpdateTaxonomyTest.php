@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Taxonomies;
 
+use Statamic\Facades\Blink;
 use Statamic\Facades\Collection;
 use Statamic\Facades\Taxonomy;
 use Statamic\Facades\User;
@@ -69,11 +70,15 @@ class UpdateTaxonomyTest extends TestCase
                 'collections' => ['one', 'three'],
             ])
             ->assertOk();
+            
+        $taxonomy = Taxonomy::find($taxonomy->handle());
+        
+        // Taxonomies don't change on one, just updated, so clear taxonomies blink cache
+        Blink::forget("collection-{$collectionOne->handle()}-taxonomies-*");
 
-        $collectionOne = Collection::find($collectionOne->handle());
+        // Reload Collection 2 and 3 - blink flush not require as both have different taxonomy lists
         $collectionTwo = Collection::find($collectionTwo->handle());
         $collectionThree = Collection::find($collectionThree->handle());
-        $taxonomy = Taxonomy::find($taxonomy->handle());
 
         $this->assertEquals(['one', 'three'], $taxonomy->collections()->map->handle()->all());
         $this->assertTrue($collectionOne->taxonomies()->contains($taxonomy));

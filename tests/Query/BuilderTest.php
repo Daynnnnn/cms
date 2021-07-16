@@ -29,7 +29,7 @@ class BuilderTest extends TestCase
         $searchedEntry = $this->createDummyCollectionAndEntries();
         $retrievedEntry = Entry::query()->find($searchedEntry->id());
 
-        $this->assertSame($searchedEntry, $retrievedEntry);
+        $this->assertEquals($searchedEntry, $retrievedEntry);
     }
 
     /** @test **/
@@ -39,7 +39,6 @@ class BuilderTest extends TestCase
         $columns = ['title'];
         $retrievedEntry = Entry::query()->find($searchedEntry->id(), $columns);
 
-        dd($searchedEntry->fresh());
         $this->assertSame($searchedEntry, $retrievedEntry);
         $this->assertSame($retrievedEntry->selectedQueryColumns(), $columns);
     }
