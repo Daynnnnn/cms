@@ -29,6 +29,10 @@ class MountingTest extends TestCase
 
         $mount->slug('diary')->save();
 
+        Collection::find('blog')->save();
+        $one->save();
+        $two->save();
+
         $this->assertNull(Entry::findByUri('/pages/blog/one'));
         $this->assertNull(Entry::findByUri('/pages/blog/two'));
         $this->assertEquals($one->fresh(), Entry::findByUri('/pages/diary/one'));
