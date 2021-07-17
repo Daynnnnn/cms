@@ -37,9 +37,10 @@ class BuilderTest extends TestCase
     {
         $searchedEntry = $this->createDummyCollectionAndEntries();
         $columns = ['title'];
+        $searchedEntry->selectedQueryColumns($columns);
         $retrievedEntry = Entry::query()->find($searchedEntry->id(), $columns);
 
-        $this->assertSame($searchedEntry, $retrievedEntry);
-        $this->assertSame($retrievedEntry->selectedQueryColumns(), $columns);
+        $this->assertEquals($searchedEntry, $retrievedEntry);
+        $this->assertEquals($retrievedEntry->selectedQueryColumns(), $columns);
     }
 }
